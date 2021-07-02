@@ -2,8 +2,8 @@
 namespace Gentux\Healthz;
 
 use Exception;
-use Twig_Environment;
-use Twig_Loader_Array;
+use Twig\Environment as TwigEnvironment;
+use Twig\Loader\ArrayLoader as TwigArrayLoader;
 use Gentux\Healthz\Support\Stack;
 use Gentux\Healthz\Exceptions\HealthWarningException;
 
@@ -73,16 +73,16 @@ class Healthz
      *
      * @return string
      */
-    public function html(ResultStack $results=null): string
+    public function html(ResultStack $results = null): string
     {
         if ($results === null) {
             $results = $this->run();
         }
 
-        $loader = new Twig_Loader_Array([
+        $loader = new TwigArrayLoader([
             'healthz' => file_get_contents(__DIR__ . '/../templates/healthz.html'),
         ]);
-        $twig = new Twig_Environment($loader);
+        $twig = new TwigEnvironment($loader);
 
         return $twig->render('healthz', ['results' => $results->all()]);
     }
