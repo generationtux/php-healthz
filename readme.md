@@ -113,6 +113,19 @@ foreach ($results->all() as $result) {
 $html = $healthz->html();
 ```
 
+**Enable integration with the Laravel Exception Handler**
+
+It allows to report Healthz failure and warning exceptions to the Laravel log exceptions or send them to an external service like Flare, Bugsnag or Sentry.
+
+This feature is disabled by default, here how to enable it for Healthz failure and warning exceptions:
+```php
+$healthz->setReportFailure(true);
+$healthz->setReportWarning(true);
+```
+NOTE: The [`report()`](https://laravel.com/docs/8.x/errors#the-report-helper) Laravel helper must be present, otherwise this feature does nothing
+
+For more informations see the Laravel Docs: https://laravel.com/docs/8.x/errors
+
 ----------------------------------------------------------------------------
 
 ## Check configuration

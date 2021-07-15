@@ -20,6 +20,16 @@ class Healthz
     }
 
     /**
+     * @var bool
+     */
+    protected $reportFailure = false;
+
+    /**
+     * @var bool
+     */
+    protected $reportWarning = false;
+
+    /**
      * @param HealthCheck[] $healthChecks
      */
     public function __construct($healthChecks = [])
@@ -56,6 +66,18 @@ class Healthz
             } catch (Exception $e) {
                 $check->setStatus($e->getMessage());
                 $resultCode = $e instanceof HealthWarningException ? HealthResult::RESULT_WARNING : HealthResult::RESULT_FAILURE;
+
+                if ($resultCode === HealthResult::RESULT_FAILURE &&
+                    $this->shouldReportFailure()
+                ) {
+                    $this->reportException($e);
+                }
+
+                if ($resultCode === HealthResult::RESULT_WARNING &&
+                    $this->shouldReportWarning()
+                ) {
+                    $this->reportException($e);
+                }
             }
 
             $results[] = new HealthResult($resultCode, $check);
@@ -85,5 +107,66 @@ class Healthz
         $twig = new TwigEnvironment($loader);
 
         return $twig->render('healthz', ['results' => $results->all()]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldReportFailure()
+    {
+        return $this->reportFailure;
+    }
+
+    /**
+     * If set to true, report a HealthFailureException to the Laravel Exception Handler
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function setReportFailure(bool $value)
+    {
+        $this->reportFailure = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldReportWarning()
+    {
+        return $this->reportWarning;
+    }
+
+    /**
+     * If set to true, report a HealthWarningException to the Laravel Exception Handler
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function setReportWarning(bool $value)
+    {
+        $this->reportWarning = $value;
+
+        return $this;
+    }
+
+    /**
+     * Report an exception to the Laravel Exception Handler
+     *
+     * @param  \Throwable  $exception
+     * @return void
+     */
+    protected function reportException($e)
+    {
+        if (function_exists('report')) {
+            try {
+                report($e);
+            } catch (\Throwable $e) {
+                // silent failed
+            }
+        }
     }
 }
