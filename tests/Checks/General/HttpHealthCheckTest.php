@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Gentux\Healthz\HealthCheck;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Uri;
 
 class HttpHealthCheckTest extends \TestCase
 {
@@ -113,7 +114,7 @@ class HttpHealthCheckTest extends \TestCase
     /** @test */
     public function if_no_description_is_set_the_request_uri_is_used()
     {
-        $this->request->shouldReceive('getUri')->andReturn('/somewhere');
+        $this->request->shouldReceive('getUri')->andReturn(new Uri('/somewhere'));
         $description = $this->http->description();
 
         $this->assertSame('/somewhere', $description);
