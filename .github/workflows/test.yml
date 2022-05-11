@@ -30,3 +30,6 @@ jobs:
 
     - name: PHPUnit 
       uses: php-actions/phpunit@v3
+      with:
+        configuration: phpunit.xml
+        php_version: ${{ matrix.php }}
