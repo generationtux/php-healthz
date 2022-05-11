@@ -1,7 +1,5 @@
 <?php
 
-namespace Gentux\Healthz;
-
 class TestCase extends \PHPUnit\Framework\TestCase
 {
 
