@@ -28,8 +28,5 @@ jobs:
       with:
         php_version: ${{ matrix.php }}
 
-    - name: PHPUnit 
-      uses: php-actions/phpunit@v3
-      with:
-        configuration: phpunit.xml
-        php_version: ${{ matrix.php }}
+    - name: Execute tests
+      run: vendor/bin/phpunit
