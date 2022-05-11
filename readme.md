@@ -1,4 +1,4 @@
-![Build Test Status](https://github.com/generationtux/jwt-artisan/actions/workflows/test.yml/badge.svg?event=push)
+![Build Test Status](https://github.com/generationtux/php-healthz/actions/workflows/test.yml/badge.svg?event=push)
 [![Code Climate](https://codeclimate.com/github/generationtux/php-healthz/badges/gpa.svg)](https://codeclimate.com/github/generationtux/php-healthz)
 [![Test Coverage](https://codeclimate.com/github/generationtux/php-healthz/badges/coverage.svg)](https://codeclimate.com/github/generationtux/php-healthz/coverage)
 
