@@ -2,9 +2,8 @@
 namespace Gentux\Healthz\Checks\General;
 
 use Gentux\Healthz\HealthCheck;
-use TestCase;
 
-class DebugHealthCheckTest extends TestCase
+class DebugHealthCheckTest extends \TestCase
 {
 
     public function setUp(): void

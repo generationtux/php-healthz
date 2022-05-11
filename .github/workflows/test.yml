@@ -29,4 +29,4 @@ jobs:
         php_version: ${{ matrix.php }}
 
     - name: PHPUnit 
-      uses: php-actions/phpunit@v3
+      uses: php-actions/phpunit@v2
