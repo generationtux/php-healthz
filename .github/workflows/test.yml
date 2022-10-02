@@ -23,6 +23,12 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
 
+    - name: Cache Composer dependencies
+      uses: actions/cache@v2
+      with:
+        path: /tmp/composer-cache
+        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
     - name: Install Dependencies
       uses: php-actions/composer@master
       with:
