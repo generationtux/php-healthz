@@ -1,6 +1,11 @@
 name: test
 
-on: [push]
+on:
+  push:
+  pull_request:
+    types:
+      - opened
+      - synchronize
 
 jobs:
   build:
@@ -8,10 +13,10 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
-    strategy: 
+    strategy:
       fail-fast: false
       matrix:
-        php: [ 7.3, 7.4 ]
+        php: [ "7.3", "7.4", "8.0", "8.1" ]
         os: [ ubuntu-latest ]
 
     steps:
@@ -22,6 +27,12 @@ jobs:
       uses: shivammathur/setup-php@master
       with:
         php-version: ${{ matrix.php }}
+
+    - name: Cache Composer dependencies
+      uses: actions/cache@v2
+      with:
+        path: /tmp/composer-cache
+        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
     - name: Install Dependencies
       uses: php-actions/composer@master
