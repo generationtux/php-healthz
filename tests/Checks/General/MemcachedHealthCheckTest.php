@@ -9,10 +9,9 @@ namespace {
 
 namespace Gentux\Healthz\Checks\General {
 
-    use Gentux\Healthz\Checks\General\MemcachedHealthCheck;
     use Mockery;
     use Gentux\Healthz\HealthCheck;
-    use GeckoPackages\MemcacheMock\MemcachedMock;
+    use Memcached;
 
     class MemcachedHealthCheckTest extends \TestCase
     {
@@ -26,7 +25,7 @@ namespace Gentux\Healthz\Checks\General {
         public function setUp(): void
         {
             parent::setUp();
-            $this->memcached = Mockery::mock(MemcachedMock::class);
+            $this->memcached = Mockery::mock(Memcached::class);
             $this->health = new MemcachedHealthCheck($this->memcached);
         }
 
